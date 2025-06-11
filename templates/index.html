@@ -1,59 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Boston Housing Price Prediction</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boston Housing Price Prediction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background: radial-gradient(circle at top left, #2e2e2e, #1a1a1a);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.08);
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 30px;
+      color: #f5f5f5;
+      letter-spacing: 1px;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .input-group {
+      width: 48%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background-color: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #6dd5ed;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #6dd5ed, #2193b0);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(to right, #2193b0, #6dd5ed);
+      transform: scale(1.02);
+    }
+
+    h3 {
+      text-align: center;
+      margin-top: 20px;
+      color: #1de9b6;
+    }
+
+    @media (max-width: 600px) {
+      .input-group {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <h2>Boston Housing Price Prediction</h2>
     <form action="/predict" method="post">
-
-        <label>CRIM:</label><br>
-        <input type="text" name="CRIM"><br>
-
-        <label>ZN:</label><br>
-        <input type="text" name="ZN"><br>
-
-        <label>INDUS:</label><br>
-        <input type="text" name="INDUS"><br>
-
-        <label>CHAS:</label><br>
-        <input type="text" name="CHAS"><br>
-
-        <label>NOX:</label><br>
-        <input type="text" name="NOX"><br>
-
-        <label>RM:</label><br>
-        <input type="text" name="RM"><br>
-
-        <label>AGE:</label><br>
-        <input type="text" name="AGE"><br>
-
-        <label>DIS:</label><br>
-        <input type="text" name="DIS"><br>
-
-        <label>RAD:</label><br>
-        <input type="text" name="RAD"><br>
-
-        <label>TAX:</label><br>
-        <input type="text" name="TAX"><br>
-
-        <label>PTRATIO:</label><br>
-        <input type="text" name="PTRATIO"><br>
-
-        <label>B:</label><br>
-        <input type="text" name="B"><br>
-
-        <label>LSTAT:</label><br>
-        <input type="text" name="LSTAT"><br>
-
-        <br>
-        <input type="submit" value="Predict">
-
+      {% for field in ['CRIM','ZN','INDUS','CHAS','NOX','RM','AGE','DIS','RAD','TAX','PTRATIO','B','LSTAT'] %}
+        <div class="input-group">
+          <label for="{{ field }}">{{ field }}:</label>
+          <input type="text" name="{{ field }}" id="{{ field }}">
+        </div>
+      {% endfor %}
+      <button type="submit" class="submit-btn">Predict</button>
     </form>
 
     {% if prediction_text %}
-        <h3>{{ prediction_text }}</h3>
+      <h3>{{ prediction_text }}</h3>
     {% endif %}
-
+  </div>
 </body>
 </html>
